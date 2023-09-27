@@ -1,1 +1,1 @@
-# calculator
+The calculator project.   
