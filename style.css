@@ -45,14 +45,19 @@ body {
   flex-direction: column;
   align-items: end;
   margin-bottom: 24px;
+  overflow: hidden;
 }
 
 .calculations {
   font-size: 30px;
+  height: 30px;
   color: rgb(245, 245, 220, 0.8);
   margin-bottom: 10px;
 }
 
+.result {
+  height: 32px;
+}
 .button-container {
   display: flex;
 }
