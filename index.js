@@ -1,3 +1,6 @@
+//SECOND TRY ON INDEX.JS
+
+
 function add(a, b) {
   return a + b;
 }
@@ -22,7 +25,7 @@ let a = 0;
 let b = 0;
 let operator = "";
 
-let btnEquals = "";
+
 
 
 function operate(a, b, operator) {
@@ -40,13 +43,11 @@ function operate(a, b, operator) {
   }
   };
 
-
-let button1 = document.querySelector(".btn-1");
-let button2 = document.querySelector(".btn-2");
 let buttonAddition = document.querySelector(".btn-addition");
 let buttonEquals = document.querySelector(".btn-equals");
 let buttonClear = document.querySelector(".btn-clear");
 let buttonUndo = document.querySelector(".btn-undo");
+let buttonDecimal = document.querySelector(".btn-decimal");
 
 let displayCalculations = document.querySelector(".calculations");
 let displayResult = document.querySelector(".result");
@@ -54,11 +55,13 @@ let displayResult = document.querySelector(".result");
 let numericButtons = document.querySelectorAll(".btn-num");
 let operatorButtons = document.querySelectorAll(".btn-operator");
 
+// Clear button
 buttonClear.addEventListener("click", function(){
   displayCalculations.textContent = "";
   displayResult.textContent = "0";
 });
 
+//UndoButton
 buttonUndo.addEventListener("click", function(){
   let string = displayCalculations.textContent;
   console.log(string);
@@ -72,63 +75,90 @@ buttonUndo.addEventListener("click", function(){
   }
 );
 
+// Numeric buttons populating the calculation display
+numericButtons.forEach(item => item.addEventListener("click", function(event) {
+ displayCalculations.textContent += event.target.value;
 
-function createCalculations() { 
+}));
+
+operatorButtons.forEach(item => item.addEventListener("click", function(event) {
+  displayCalculations.textContent += ` ${event.target.value} `;
+const currentOperator = event.target.value;
+console.log("current operator is: " + currentOperator);
+
+const a = getFirstNumber();
+const b = getSecondNumber();
+const operator1 = getOperator();
+
+// second operator is clicked
+if (b) {
+  operate(a, b, operator);
+  console.log("thats first round od calculation, result is: " + operate(a, b, operator1));
   
-numericButtons.forEach(item => {item.addEventListener("click", function(event) {
+  displayCalculations.textContent = `${operate(a, b, operator1)} ${currentOperator} `;
+  displayResult.textContent = operate(a, b, operator1);
+}
 
-displayCalculations.textContent += event.target.value;
-    
-})});
 
-operatorButtons.forEach(item => {item.addEventListener("click", function(event) { 
- 
-  operator = event.target.value;
+}));
+
+// Decimal button
+buttonDecimal.addEventListener("click", function() {
+  let displayString = displayCalculations.textContent;
   
-  displayCalculations.textContent += ` ${operator} `;
+  let substring = "."
 
-  if (displayResult.textContent != 0) {
-    displayCalculations.textContent = `${displayResult.textContent} ${operator} `;
+  if (displayString.includes(substring)) {
+    true;
+  } else displayCalculations.textContent += ".";
+  
+  if (displayString.includes(substring) && displayString.includes(" ")) {
+    let checkString = displayCalculations.textContent;
+    let secondPartOfString = checkString.split(" ")[2];
+    if (secondPartOfString.includes(".")) {
+      return
+    }
+    displayCalculations.textContent += ".";
   }
 
-  if (operator === "+" ||
-  operator === "-" ||
-  operator === "*" ||
-  operator === "/") {
-    const grabFirstNumber = displayCalculations.textContent;
-    a = grabFirstNumber.split(" ")[0];
-    console.log("a =", a);
-    console.log("Operator is:", operator);
-    
-
-  };
-  
-})});
-buttonEquals.addEventListener("click", function() {
-  const grabSecondNumber = displayCalculations.textContent;
-  b = grabSecondNumber.substring(grabSecondNumber.lastIndexOf(" ") + 1);
-
-  console.log("b =", b);
-  
-  console.log("Result is:", operate(a, b, operator));
-  displayResult.textContent = parseFloat(operate(a, b, operator).toFixed(2));
-  displayCalculations.textContent = "";
-  a = displayResult.textContent;
-  console.log(a);
-
-
 });
-}
-//trying outside function to create second number and then call it inside createCalculation
 
-function outsideFunctionCreateSecondNumber() {
-  const grabSecondNumber = displayCalculations.textContent;
-  b = grabSecondNumber.substring(grabSecondNumber.lastIndexOf(" ") + 1);
+// Equals Button
+buttonEquals.addEventListener("click", function() {
+  a = getFirstNumber();
+  b = getSecondNumber();
+  operator = getOperator();
+  console.log("Operation is: " + displayCalculations.textContent);
 
-  console.log("b =", b);
-  return b
-}
+  displayResult.textContent = parseFloat(operate(a, b, operator).toFixed(2))
+  
+});
+
+
+function getFirstNumber () {
+  const firstNumber = displayCalculations.textContent;
+  a = firstNumber.split(" ")[0];
+  console.log("a is: " + a);
+  return a;
+};
+
+function getSecondNumber() {
+  const secondNumber = displayCalculations.textContent;
+  b = secondNumber.split(" ")[2];
+  console.log("b is: " + b)
+  return b;
+};
+
+function getOperator() {
+  const string = displayCalculations.textContent;
+  operator = string.split(" ")[1];
+  console.log("opertor is: " + operator);
+  return operator;
+};
 
 
 
-createCalculations();
+
+
+
+
