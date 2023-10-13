@@ -1,6 +1,3 @@
-//SECOND TRY ON INDEX.JS
-
-
 function add(a, b) {
   return a + b;
 }
@@ -26,8 +23,6 @@ let b = 0;
 let operator = "";
 
 
-
-
 function operate(a, b, operator) {
   a = Number(a);
   b = Number(b);
@@ -43,7 +38,6 @@ function operate(a, b, operator) {
   }
   };
 
-let buttonAddition = document.querySelector(".btn-addition");
 let buttonEquals = document.querySelector(".btn-equals");
 let buttonClear = document.querySelector(".btn-clear");
 let buttonUndo = document.querySelector(".btn-undo");
@@ -64,9 +58,7 @@ buttonClear.addEventListener("click", function(){
 //UndoButton
 buttonUndo.addEventListener("click", function(){
   let string = displayCalculations.textContent;
-  console.log(string);
   let lastChar = string.charAt(string.length -1);
-  console.log(lastChar);
     if (lastChar === " ") {
       displayCalculations.textContent = displayCalculations.textContent.slice(0, -3);
     } else {
@@ -78,11 +70,12 @@ buttonUndo.addEventListener("click", function(){
 // Numeric buttons populating the calculation display
 numericButtons.forEach(item => item.addEventListener("click", function(event) {
  displayCalculations.textContent += event.target.value;
-
 }));
 
+ 
+// Operator buttons
 operatorButtons.forEach(item => item.addEventListener("click", function(event) {
-  displayCalculations.textContent += ` ${event.target.value} `;
+  //displayCalculations.textContent += ` ${event.target.value} `;
 const currentOperator = event.target.value;
 console.log("current operator is: " + currentOperator);
 
@@ -90,16 +83,16 @@ const a = getFirstNumber();
 const b = getSecondNumber();
 const operator1 = getOperator();
 
+displayCalculations.textContent = a + " " + currentOperator + " ";
+
 // second operator is clicked
 if (b) {
   operate(a, b, operator);
-  console.log("thats first round od calculation, result is: " + operate(a, b, operator1));
+  console.log("thats first round of calculation, result is: " + operate(a, b, operator1));
   
   displayCalculations.textContent = `${operate(a, b, operator1)} ${currentOperator} `;
   displayResult.textContent = operate(a, b, operator1);
 }
-
-
 }));
 
 // Decimal button
@@ -128,10 +121,8 @@ buttonEquals.addEventListener("click", function() {
   a = getFirstNumber();
   b = getSecondNumber();
   operator = getOperator();
-  console.log("Operation is: " + displayCalculations.textContent);
 
-  displayResult.textContent = parseFloat(operate(a, b, operator).toFixed(2))
-  
+  displayResult.textContent = parseFloat(operate(a, b, operator).toFixed(2));
 });
 
 
@@ -152,13 +143,58 @@ function getSecondNumber() {
 function getOperator() {
   const string = displayCalculations.textContent;
   operator = string.split(" ")[1];
-  console.log("opertor is: " + operator);
   return operator;
 };
 
 
+// KEYBOARD INPUT
+document.addEventListener("keydown", function(event) {
+  if (event.key >= "0" && event.key <= "9") {
+   console.log("Numeric key pressed: " + event.key);
+    displayCalculations.textContent += event.key;
+  }
+ });
+document.addEventListener("keydown", function(event) {
+  if (["+", "-", "*", "/"].includes(event.key)) {
+   event.preventDefault();
+   const currentOperator = event.key;
+   console.log("current operator is: " + currentOperator);
+   
+   const a = getFirstNumber();
+   const b = getSecondNumber();
+   const operator1 = getOperator();
+   
+   displayCalculations.textContent = a + " " + currentOperator + " ";
+   
+   if (b) {
+     operate(a, b, operator);
+     console.log("thats first round of calculation, result is: " + operate(a, b, operator1));
+     
+     displayCalculations.textContent = `${operate(a, b, operator1)} ${currentOperator} `;
+     displayResult.textContent = operate(a, b, operator1);
+   }
+  }
+ });
 
+ document.addEventListener("keydown", function(event) {
+  if (event.key === "Enter" || event.key === "=") {
+    event.preventDefault();
+    buttonEquals.click();
+  }
+});
 
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Backspace") {
+    event.preventDefault();
+    buttonUndo.click();
+  }
+});
 
+document.addEventListener("keydown", function(event) {
+  if (event.key === ".") {
+    event.preventDefault();
+    buttonDecimal.click();
+  }
+});
 
 
