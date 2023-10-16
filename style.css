@@ -80,12 +80,15 @@ button {
   box-shadow: -1px -1px 7px rgb(245, 245, 220, 0.1), 2px 2px 3px 2px black;
 }
 
+button:focus {
+  outline: none;
+}
+
 .double-size-button {
   width: 100px;
 }
 
 .fa-solid {
   color: beige;
-  font-size: 20px;
-  
+  font-size: 20px; 
 }

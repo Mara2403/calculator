@@ -89,7 +89,6 @@ displayCalculations.textContent = a + " " + currentOperator + " ";
 if (b) {
   operate(a, b, operator);
   console.log("thats first round of calculation, result is: " + operate(a, b, operator1));
-  
   displayCalculations.textContent = `${operate(a, b, operator1)} ${currentOperator} `;
   displayResult.textContent = operate(a, b, operator1);
 }
