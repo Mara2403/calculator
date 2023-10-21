@@ -15,7 +15,7 @@ function divide(a, b) {
     alert("Uh-uh! You can't divide by zero!");
     return;
   }
-  return  parseFloat((a / b).toFixed(2))
+  return  parseFloat((a / b).toFixed(4))
 };
 
 let a = 0;
@@ -121,7 +121,7 @@ buttonEquals.addEventListener("click", function() {
   b = getSecondNumber();
   operator = getOperator();
 
-  displayResult.textContent = parseFloat(operate(a, b, operator).toFixed(2));
+  displayResult.textContent = parseFloat(operate(a, b, operator).toFixed(4));
 });
 
 
